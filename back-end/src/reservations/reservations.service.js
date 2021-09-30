@@ -1,22 +1,48 @@
+const knex = require("../db/connection");
+async function list(reservation_date) {
+    return await knex("reservations")
+      .where({ reservation_date })
+      .orderBy("reservation_time", "asc");
+  }
 
-// const knex = require("../db/connection");
-// const tableName = "reservations";
+function create(reservation) {
+    return knex("reservations")
+        .insert(reservation)
+        .returning("*")
+        .then((createdRecords) => createdRecords[0]);
+}
 
-// /** inserts new reservation into reservations and returns all reservations */
-// function create(reservation) {
-//   return knex(table).insert(reservation).returning("*");
-// }
+function read(reservationId) {
+    return knex("reservations")
+        .select("*")
+        .where({ reservation_id: reservationId })
+        .then((returnedRecords) => returnedRecords[0]);
+}
 
-// /** query the reservations data if a date was provided in the request */
-// function list(date) {
-//   if (date) {
-//     return knex(table).select("*").where({ reservation_date: date });
-//   } else {
-//     return knex(table).select("*");
-//   }
-// }
+// updates a reservation status
+function update(updatedReservation) {
+    return knex("reservations")
+        .select("*")
+        .where({ reservation_id: updatedReservation.reservation_id })
+        .update(updatedReservation, "*")
+        .then((updatedReservations) => updatedReservations[0]);
 
-// module.exports = {
-//   create,
-//   list,
-// };
+}
+
+// finds a reservation by phone number
+function find(mobile_number) {
+    return knex("reservations")
+      .whereRaw(
+        "translate(mobile_number, '() -', '') like ?",
+        `%${mobile_number.replace(/\D/g, "")}%`
+      )
+      .orderBy("reservation_date");
+  }
+
+module.exports = {
+    list,
+    create,
+    read,
+    update,
+    find,
+}
