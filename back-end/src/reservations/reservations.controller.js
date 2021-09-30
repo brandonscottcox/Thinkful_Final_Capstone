@@ -4,20 +4,20 @@ const hasProperties = require("../errors/hasProperties");
 const hasOnlyValidProperties = require("../errors/hasOnlyValidProperties");
 
 const REQUIRED_PROPERTIES = [
-  "first_name",
-  "last_name",
-  "mobile_number",
-  "reservation_date",
-  "reservation_time",
-  "people",
+    "first_name",
+    "last_name",
+    "mobile_number",
+    "reservation_date",
+    "reservation_time",
+    "people",
 ]
 
 const VALID_PROPERTIES = [
-  ...REQUIRED_PROPERTIES,
-  "status",
-  "reservation_id", 
-  "created_at", 
-  "updated_at",
+    ...REQUIRED_PROPERTIES,
+    "status",
+    "reservation_id", 
+    "created_at", 
+    "updated_at",
 ]
 
 // validation middleware: checks that reservation_date has a valid date value
