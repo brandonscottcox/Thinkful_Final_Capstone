@@ -17,14 +17,14 @@ export default function NewReservation({reservations, setReservations}) {
     function handleSubmit(event) {
         event.preventDefault();
         createReservation(formData)
-          .then(() => history.push(`/dashboard?date=${formData.reservation_date}`))
-          .catch(console.log);
+            .then(() => history.push(`/dashboard?date=${formData.reservation_date}`))
+            .catch(console.log);
         history.push(`/dashboard?date=${formData.reservation_date}`);
-      }
+        }
 
-      const handleChange = ({ target: {name, value } }) => {
+        const handleChange = ({ target: {name, value } }) => {
         setFormData ({ ...formData, [name]: value });
-      }
+        }
 
 //---------------------------------------------------------------------------
 
