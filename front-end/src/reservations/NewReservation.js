@@ -67,7 +67,7 @@ export default function NewReservation({reservations, setReservations}) {
     //   };
 
 
-    
+
 
 
 
@@ -154,11 +154,10 @@ export default function NewReservation({reservations, setReservations}) {
                     />
                 </div>
 
-            <button onClick={handleSubmit}>Submit</button>
+            <button type="submit">Submit</button>
             <button onClick={history.goBack} className="ml-1" type="button">Cancel</button>
             </form>
             </div>
-
             
         </main>
     )

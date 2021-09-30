@@ -134,17 +134,20 @@ function statusBooked(req, res, next) {
 // if query is mobile_number, look for reservations matching that number
 async function byDateOrPhone(req, res, next) {
   const { date, mobile_number } = req.query;
+
   if (date) {
+      console.log("date Exists")
     const reservations = await service.list(date);
-    if (reservations.length) {
+    // if (reservations.length) {
       res.locals.data = reservations;
       return next();
-    } else {
-      return next({
-        status: 404, 
-        message: `There are currently no pending reservations for ${date}`,
-      });
-    }
+    // } else {
+    //     console.log("no date return 404")
+    //   return next({
+    //     status: 404, 
+    //     message: `There are currently no pending reservations for ${date}`,
+    //   });
+    // }
   } 
   if (mobile_number) {
     const reservation = await service.find(mobile_number);
