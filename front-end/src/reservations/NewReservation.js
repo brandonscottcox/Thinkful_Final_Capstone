@@ -17,7 +17,6 @@ export default function NewReservation({reservations, setReservations}) {
         people: "",
     });
 
-
     function getDateErrors() {
         const errorsArr = [];
         const today = new Date();
