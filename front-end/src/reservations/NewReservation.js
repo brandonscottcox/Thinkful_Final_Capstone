@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { createReservation } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
+
 
 
 export default function NewReservation({reservations, setReservations}) {
     const history = useHistory();
+    const [errors, setErrors] = useState(null);
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",
@@ -14,13 +17,33 @@ export default function NewReservation({reservations, setReservations}) {
         people: "",
     });
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        createReservation(formData)
-            .then(() => history.push(`/dashboard?date=${formData.reservation_date}`))
-            .catch(console.log);
-        history.push(`/dashboard?date=${formData.reservation_date}`);
+
+    function getDateErrors() {
+        const errorsArr = [];
+        const today = new Date();
+        const reservationDate = new Date(formData.reservation_date);
+        if (reservationDate.getUTCDay() === 2) {
+          errorsArr.push("The restaurant is closed on Tuesdays");
         }
+        if (reservationDate.getTime() < today.getTime()) {
+          errorsArr.push("Date must be in the future");
+        }
+        return errorsArr;
+      }
+
+      function handleSubmit(event) {
+        event.preventDefault();
+        setErrors(null);
+        const errorsArr = getDateErrors();
+        if (!errorsArr.length) {
+          createReservation(formData)
+            .then(() => history.push(`/dashboard?date=${formData.reservation_date}`))
+            .catch(setErrors);
+        } else {
+          const errorMessage = { message: `${errorsArr.join(", ").trim()}` };
+          setErrors(errorMessage);
+        }
+      }
 
         const handleChange = ({ target: {name, value } }) => {
         setFormData ({ ...formData, [name]: value });
@@ -74,6 +97,7 @@ export default function NewReservation({reservations, setReservations}) {
     return (
         <main>
             <h1>New Reservation</h1>
+            {errors ? <ErrorAlert error={errors} /> : null}
             <div className="d-md-flex mb-3" onSubmit={handleSubmit}>
             <form name="create_reservation">
                 <div className="form-group">
