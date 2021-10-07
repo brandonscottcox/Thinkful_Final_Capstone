@@ -29,15 +29,14 @@ function tableNameLength(req, res, next) {
 
 // validation middleware: checks that capacity is a number
 function capacityIsNumber(req, res, next) {
-    const { capacity } = req.body.data;
-    if (!isNaN(capacity)) {
-        return next();
-    } else {
-        return next({
-            status: 400, 
-            message: `capacity field formatted incorrectly: ${capacity}. Needs to be a number.`
-        });
+    if (!req.body.data.capacity || req.body.data.capacity === "") {
+        return next({ status: 400, message: "'capacity' field cannot be empty" });
     }
+    
+    if (typeof req.body.data.capacity !== "number") {
+        return next({ status: 400, message: "'capacity' field must be a number" });
+    }
+    next()
 }
 
 // validation middleware: checks that table_name exists
