@@ -68,6 +68,11 @@ export async function listReservations(params, signal) {
     .then(formatReservationTime);
 }
 
+export async function listReservationsForPhoneNumber(mobile_number, signal) {
+  const url = `${API_BASE_URL}/reservations?mobile_number=${mobile_number}`;
+  return await fetchJson(url, { headers, signal }, []);
+}
+
 export async function listTables(signal) {
   const url = `${API_BASE_URL}/tables`;
   return await fetchJson(url, { headers, signal }, []);
@@ -124,7 +129,38 @@ export async function updateTable(table_id, reservation_id, signal) {
   );
 }
 
-export async function updateReservationStatus() {}
+export async function updateReservationStatus(reservation_id, status, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
+  return await fetchJson(
+    url,
+    {
+      body: JSON.stringify({ data: { status } }),
+      headers,
+      method: "PUT",
+      signal,
+    },
+    []
+  );
+}
+
+export async function updateReservationDetails(
+  reservation,
+  signal,
+  reservation_id
+) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+  reservation.people = +reservation.people;
+  return await fetchJson(
+    url,
+    {
+      body: JSON.stringify({ data: reservation }),
+      headers,
+      method: "PUT",
+      signal,
+    },
+    []
+  );
+}
 
 export async function deletePartyFromTable(table_id, signal) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;

@@ -26,11 +26,11 @@ export default function ReservationCard({ reservation }) {
     }
   }
 
-  function upperCaseStatus() {
-    return (
-      reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)
-    );
-  }
+  // function upperCaseStatus() {
+  //   return (
+  //     reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)
+  //   );
+  // }
 
   function getStatusStyle(style = {}) {
     if (reservation.status === "booked") {
@@ -58,7 +58,7 @@ export default function ReservationCard({ reservation }) {
             data-reservation-id-status={reservation.reservation_id}
             style={getStatusStyle()}
           >
-            {upperCaseStatus()}
+            {/* {upperCaseStatus()} */}
           </span>
         </p>
       </div>
