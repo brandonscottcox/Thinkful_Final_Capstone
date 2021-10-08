@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import React from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory, Link } from "react-router-dom";
 import { previous, today, next } from "../utils/date-time";
-import TableCard from "./TableCard";
+import TableCard from "../tables/TableCard";
+import ReservationCard from "../reservations/ReservationCard";
 
 /**
  * Defines the dashboard page.
@@ -55,24 +55,8 @@ import TableCard from "./TableCard";
           >
             Next
           </button>
-          {reservations.map((entry) => (
-            <div className="card mt-1">
-              <div className="card-body">
-                <h5 className="card-title">
-                  Reservation for: {`${entry.first_name} ${entry.last_name}`}
-                </h5>
-                <p className="card-text">Number: {entry.mobile_number}</p>
-                <p className="card-text">Date: {entry.reservation_date}</p>
-                <p className="card-text">Time: {entry.reservation_time}</p>
-                <p className="card-text">Party Size: {entry.people}</p>
-              </div>
-              <Link
-                className="btn btn-primary"
-                to={`/reservations/${entry.reservation_id}/seat`}
-              >
-                Seat
-              </Link>
-            </div>
+          {reservations.map((reservation) => (
+            <ReservationCard reservation={reservation} />
           ))}
         </div>
         <div className="col-md-6 col-sm-12">
