@@ -1,11 +1,23 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { createReservation } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
-import { getDateInt, getTimeInt } from "../utils/timeIntegers";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import {
+  createReservation,
+  readReservation,
+  updateReservationDetails,
+} from "../../utils/api";
+import ErrorAlert from "../../layout/ErrorAlert";
+import { getDateInt, getTimeInt } from "../../utils/timeIntegers";
+import { Context } from "../../common/Context";
 
-export default function NewReservation({ calledAPI, setCalledAPI }) {
+export default function AddEditReservation() {
   const history = useHistory();
+  const {
+    params: { reservation_id },
+  } = useRouteMatch();
+  const apiCall = reservation_id ? updateReservationDetails : createReservation;
+  const {
+    Global: { calledAPI, setCalledAPI },
+  } = useContext(Context);
   const [errors, setErrors] = useState(null);
   const [formData, setFormData] = useState({
     first_name: "",
@@ -16,12 +28,25 @@ export default function NewReservation({ calledAPI, setCalledAPI }) {
     people: "",
   });
 
-  // changes state actively as data is input by user
-  function handleChange({ target }) {
-    return setFormData(() => ({ ...formData, [target.name]: target.value }));
+  useEffect(loadReservation, [reservation_id]);
+  function loadReservation() {
+    setErrors(null);
+    if (reservation_id) {
+      readReservation(reservation_id)
+        .then((response) => {
+          response.reservation_date = response.reservation_date.slice(0, 10);
+          return response;
+        })
+        .then(setFormData)
+        .catch(setErrors);
+    }
   }
 
-  function getDateErrors() {
+  function handleChange({ target }) {
+    setFormData(() => ({ ...formData, [target.name]: target.value }));
+  }
+
+  function getErrors() {
     const errorsArr = [];
     const today = new Date();
     const reservationDate = new Date(
@@ -32,42 +57,45 @@ export default function NewReservation({ calledAPI, setCalledAPI }) {
     const dateNowInt = getDateInt(today);
     const resDateInt = getDateInt(reservationDate);
 
-    if (reservationDate.getUTCDay() === 2) {
-      errorsArr.push("The restaurant is closed on Tuesdays");
+    if (reservationDate.getDay() === 2) {
+      errorsArr.push("the restaurant is closed on Tuesdays");
     }
     if (resDateInt < dateNowInt) {
-      errorsArr.push("Date must be in the future");
+      errorsArr.push("date must be in the future");
     }
     if (resTimeInt < 1030 || resTimeInt > 2130) {
-      errorsArr.push("Time must be within business hours (10:30 - 21:30)");
+      errorsArr.push("time must be within business hours (10:30 - 21:30)");
     }
     if (dateNowInt === resDateInt && timeNowInt > resTimeInt) {
-      errorsArr.push("Time of reservation has already passed today");
+      errorsArr.push("time of reservation has already passed today");
+    }
+    if (+formData.people < 1) {
+      errorsArr.push("reservation must be for at least one person");
     }
     return errorsArr;
   }
 
   function handleSubmit(event) {
+    const abortController = new AbortController();
     event.preventDefault();
     setErrors(null);
-    const errorsArr = getDateErrors();
+    const errorsArr = getErrors();
     if (!errorsArr.length) {
-      createReservation(formData)
+      apiCall(formData, abortController.signal, reservation_id)
         .then(() => setCalledAPI(!calledAPI))
         .then(() =>
           history.push(`/dashboard?date=${formData.reservation_date}`)
         )
         .catch(setErrors);
     } else {
-      const errorMessage = { message: `${errorsArr.join(", ").trim()}` };
-      setErrors(errorMessage);
+      setErrors(new Error(`${errorsArr.join(", ").trim()}`));
     }
   }
 
   return (
     <div>
       <h2>Reserve A Table</h2>
-      {errors ? <ErrorAlert error={errors} /> : null}
+      <ErrorAlert error={errors} />
       <form name="create_reservation" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="first_name">First Name</label>
