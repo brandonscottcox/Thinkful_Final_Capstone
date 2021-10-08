@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewReservation from "../reservations/NewReservation";
 import NewTable from "../tables/NewTable";
 import SeatParty from "../reservations/SeatParty";
-import { listTables } from "../utils/api";
+import { listTables, listReservations } from "../utils/api";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
@@ -18,27 +18,58 @@ import useQuery from "../utils/useQuery";
  */
 export default function Routes() {
   const [tables, setTables] = useState([]);
+  const [reservations, setReservations] = useState([]);
+  const [reservationsError, setReservationsError] = useState(null);
   const [tablesError, setTablesError] = useState(null);
   const [calledAPI, setCalledAPI] = useState(false);
 
   const query = useQuery();
-  const date = query.get("date");
+  const dateQuery = query.get("date");
+  const date = dateQuery ? dateQuery : today();
+  const abortController = new AbortController();
 
-  useEffect(loadTables, [calledAPI]);
-  function loadTables() {
-    const abortController = new AbortController();
+  // useEffect(loadReservations, [date, calledAPI]);
+  // function loadReservations() {
+  //   listReservations({ date }, abortController.signal)
+  //     .then(setReservations)
+  //     .catch(setReservationsError);
+  // }
+
+  // useEffect(loadTables, [calledAPI]);
+  // function loadTables() {
+  //   listTables(abortController.signal).then(setTables).catch(setTablesError);
+  // }
+
+  useEffect(loadDashboard, [date, calledAPI]);
+  function loadDashboard() {
+    listReservations({ date }, abortController.signal)
+      .then(setReservations)
+      .catch(setReservationsError);
     listTables(abortController.signal).then(setTables).catch(setTablesError);
   }
+
+  // useEffect(loadTables, [calledAPI]);
+  // function loadTables() {
+  //   listTables(abortController.signal).then(setTables).catch(setTablesError);
+  // }
+
   return (
     <Switch>
       <Route exact path="/">
         <Redirect to={"/dashboard"} />
       </Route>
       <Route exact path="/tables/new">
-        <NewTable setCalledAPI={setCalledAPI} />
+        <NewTable
+          date={date}
+          calledAPI={calledAPI}
+          setCalledAPI={setCalledAPI}
+        />
       </Route>
-      <Route exact path="/reservations/:reservationId/seat">
+      <Route exact path="/reservations/:reservation_id/seat">
         <SeatParty
+          date={date}
+          reservations={reservations}
+          setReservations={setReservations}
           calledAPI={calledAPI}
           setCalledAPI={setCalledAPI}
           tables={tables}
@@ -46,16 +77,23 @@ export default function Routes() {
         />
       </Route>
       <Route exact path="/reservations/new">
-        <NewReservation />
+        <NewReservation calledAPI={calledAPI} setCalledAPI={setCalledAPI} />
       </Route>
       <Route exact path="/reservations">
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
         <Dashboard
-          date={date ? date : today()}
+          date={date}
           tables={tables}
+          reservations={reservations}
+          setReservations={setReservations}
+          reservationsError={reservationsError}
+          setReservationsError={setReservationsError}
+          setTables={setTables}
           tablesError={tablesError}
+          calledAPI={calledAPI}
+          setCalledAPI={setCalledAPI}
         />
       </Route>
       <Route>
@@ -64,52 +102,3 @@ export default function Routes() {
     </Switch>
   );
 }
-
-
-/*
-  return (
-    <Switch>
-      <Route exact={true} path="/">
-        <Redirect to={"/dashboard"} />
-      </Route>
-      <Route exact path="/reservations/new">
-        <NewReservation />
-      </Route>
-      <Route exact={true} path="/reservations">
-        <Redirect to={"/dashboard"} />
-      </Route>
-      <Route path="/dashboard">
-        <Dashboard date={date ? date : today()} />
-      </Route>
-      <Route>
-        <NotFound />
-      </Route>
-    </Switch>
-  );
-}
-
-------------------------------
-old
-
-
-  return (
-    <Switch>
-      <Route exact={true} path="/">
-        <Redirect to={"/dashboard"} />
-      </Route>
-      <Route exact path="/reservations/new">
-        <NewReservations />
-      </Route>
-      <Route exact={true} path="/reservations">
-        <Redirect to={"/dashboard"} />
-      </Route>
-      <Route path="/dashboard">
-        ------------------------------------------------------ >  <Dashboard date={today()} />
-      </Route>
-      <Route>
-        <NotFound />
-      </Route>
-    </Switch>
-  );
-}
-*/
