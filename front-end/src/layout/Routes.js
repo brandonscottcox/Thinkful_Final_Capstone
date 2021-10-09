@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import NewReservation from "../reservations/NewReservation";
+import AddEditReservation from "../reservations/AddEditReservation";
 import NewTable from "../tables/NewTable";
 import SeatParty from "../reservations/SeatParty";
+import SearchMobileNumber from "../reservations/SearchMobileNumber";
 import { listTables, listReservations } from "../utils/api";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
@@ -16,7 +17,7 @@ import useQuery from "../utils/useQuery";
  *
  * @returns {JSX.Element}
  */
- export default function Routes() {
+export default function Routes() {
   const [tables, setTables] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
@@ -53,6 +54,9 @@ import useQuery from "../utils/useQuery";
           setCalledAPI={setCalledAPI}
         />
       </Route>
+      <Route exact path="/reservations/:reservation_id/edit">
+        <AddEditReservation calledAPI={calledAPI} setCalledAPI={setCalledAPI} />
+      </Route>
       <Route exact path="/reservations/:reservation_id/seat">
         <SeatParty
           date={date}
@@ -65,10 +69,17 @@ import useQuery from "../utils/useQuery";
         />
       </Route>
       <Route exact path="/reservations/new">
-        <NewReservation calledAPI={calledAPI} setCalledAPI={setCalledAPI} />
+        <AddEditReservation calledAPI={calledAPI} setCalledAPI={setCalledAPI} />
       </Route>
       <Route exact path="/reservations">
         <Redirect to={"/dashboard"} />
+      </Route>
+      <Route exact path="/search">
+        <SearchMobileNumber
+          reservations={reservations}
+          setReservations={setReservations}
+          setReservationsError={setReservationsError}
+        />
       </Route>
       <Route path="/dashboard">
         <Dashboard

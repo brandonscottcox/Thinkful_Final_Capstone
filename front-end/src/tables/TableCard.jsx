@@ -17,7 +17,7 @@ export default function TableCard({ calledAPI, setCalledAPI, table }) {
   }
 
   return (
-    <div className="card">
+    <div className="card" key={table.table_id}>
       <div className="card-body">
         <h5 className="card-title">Table: {table.table_name}</h5>
         <p className="card-text">Capacity: {table.capacity}</p>
