@@ -1,14 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createTable } from "../../utils/api";
-import ErrorAlert from "../../layout/ErrorAlert";
-import { Context } from "../../common/Context";
+import { createTable } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
-export default function NewTable() {
+export default function NewTable({ date, calledAPI, setCalledAPI }) {
   const history = useHistory();
-  const {
-    Global: { date, calledAPI, setCalledAPI },
-  } = useContext(Context);
   const [errors, setErrors] = useState(null);
   const [formData, setFormData] = useState({
     table_name: "",
@@ -19,7 +15,7 @@ export default function NewTable() {
     return setFormData(() => ({ ...formData, [target.name]: target.value }));
   }
 
-  function getErrors() {
+  function validateData() {
     const errorsArr = [];
     if (formData.table_name.length < 2) {
       errorsArr.push("table name is too short");
@@ -33,7 +29,7 @@ export default function NewTable() {
   function handleSubmit(event) {
     event.preventDefault();
     setErrors(null);
-    const errorsArr = getErrors();
+    const errorsArr = validateData();
     if (!errorsArr.length) {
       createTable(formData)
         .then(() => setCalledAPI(() => !calledAPI))
@@ -48,7 +44,7 @@ export default function NewTable() {
   return (
     <div>
       <h2>Create Table</h2>
-      <ErrorAlert error={errors} />
+      {errors ? <ErrorAlert error={errors} /> : null}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="table_name">Table Name</label>

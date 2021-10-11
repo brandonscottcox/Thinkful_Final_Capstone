@@ -1,47 +1,30 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { listReservationsForPhoneNumber } from "../../utils/api";
+import { listReservationsForPhoneNumber } from "../utils/api";
 import ReservationCard from "./ReservationCard";
-import ErrorAlert from "../../layout/ErrorAlert";
-import { Context } from "../../common/Context";
+import ErrorAlert from "../layout/ErrorAlert";
 
 export default function SearchMobileNumber() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [findPressed, setFindPressed] = useState(false);
-  const {
-    Global: { calledAPI },
-    Reservations,
-  } = useContext(Context);
+  const [error, setError] = useState(null);
   const history = useHistory();
-
-  useEffect(search, [calledAPI]);
-  function search() {
-    if (mobileNumber) {
-      listReservationsForPhoneNumber(mobileNumber)
-        .then((response) => {
-          setFindPressed(true);
-          return response;
-        })
-        .then(setSearchResults)
-        .catch(Reservations.setError);
-    }
-  }
 
   function handleChange({ target }) {
     setMobileNumber(() => target.value);
   }
 
   function handleSubmit(event) {
+    const abortController = new AbortController();
     event.preventDefault();
-    setFindPressed(false);
-    search();
+    listReservationsForPhoneNumber(mobileNumber, abortController.signal)
+      .then(setSearchResults)
+      .catch(setError);
   }
 
   return (
     <div>
-      <ErrorAlert error={Reservations.error} />
+      {error && <ErrorAlert error={error} />}
       <form className="mt-2" name="search_for_number" onSubmit={handleSubmit}>
         <label html>
           <h2>Search by Mobile Number</h2>
@@ -73,11 +56,13 @@ export default function SearchMobileNumber() {
         </div>
       </form>
       <div className="mt-4">
-        {searchResults.length
-          ? searchResults.map((reservation) => (
-              <ReservationCard reservation={reservation} />
-            ))
-          : findPressed && <h1>No reservations found</h1>}
+        {searchResults.length ? (
+          searchResults.map((reservation) => (
+            <ReservationCard reservation={reservation} />
+          ))
+        ) : (
+          <h1>No reservations found</h1>
+        )}
       </div>
     </div>
   );
