@@ -52,6 +52,8 @@ export default function Routes() {
           date={date}
           calledAPI={calledAPI}
           setCalledAPI={setCalledAPI}
+          listReservations={listReservations}
+          listTables={listTables}
         />
       </Route>
       <Route exact path="/reservations/:reservation_id/edit">
@@ -93,6 +95,8 @@ export default function Routes() {
           tablesError={tablesError}
           calledAPI={calledAPI}
           setCalledAPI={setCalledAPI}
+          listReservations={listReservations}
+          listTables={listTables}
         />
       </Route>
       <Route>

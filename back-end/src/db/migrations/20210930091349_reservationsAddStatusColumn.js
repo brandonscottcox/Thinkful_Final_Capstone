@@ -9,3 +9,5 @@ exports.down = function(knex) {
         table.dropColumn("status");
     });
 };
+
+//edit
