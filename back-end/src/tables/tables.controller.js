@@ -92,6 +92,7 @@ function tableCapacity(req, res, next) {
 
 // validation middlware: checks if table status is free
 function tableStatusFree(req, res, next) {
+    console.log(res.locals.table)
     const { status } = res.locals.table;
     if (status === "Free") {
         return next();

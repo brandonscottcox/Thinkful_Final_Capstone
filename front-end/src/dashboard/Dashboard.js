@@ -27,6 +27,7 @@ import ReservationCard from "../reservations/ReservationCard";
 }) {
   const history = useHistory();
 
+  
   return (
     <main>
       <h1>Dashboard</h1>
@@ -68,7 +69,7 @@ import ReservationCard from "../reservations/ReservationCard";
           <ErrorAlert error={tablesError} />
           {tables ? (
             tables.map((table) => (
-              <TableCard
+              <TableCard key={table.table_id}
                 table={table}
                 calledAPI={calledAPI}
                 setCalledAPI={setCalledAPI}
