@@ -1,6 +1,6 @@
 import React from "react";
 import ErrorAlert from "../layout/ErrorAlert";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import { previous, today, next } from "../utils/date-time";
 import TableCard from "../tables/TableCard";
 import ReservationCard from "../reservations/ReservationCard";
@@ -22,6 +22,8 @@ import ReservationCard from "../reservations/ReservationCard";
   tablesError,
   calledAPI,
   setCalledAPI,
+  listReservations,
+  listTables
 }) {
   const history = useHistory();
 
@@ -72,6 +74,8 @@ import ReservationCard from "../reservations/ReservationCard";
                 setCalledAPI={setCalledAPI}
                 tables={tables}
                 setTables={setTables}
+                listReservations={listReservations}
+                listTables={listTables}
               />
             ))
           ) : (

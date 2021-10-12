@@ -41,6 +41,7 @@ function capacityIsNumber(req, res, next) {
 
 // validation middleware: checks that table_name exists
 async function tableExists(req, res, next) {
+    console.log("running tableExists")
     const { table_id } = req.params;
     const data = await service.read(table_id);
     if (data) {
@@ -76,6 +77,7 @@ async function reservationExists(req, res, next) {
 
 // validation middleware: checks that table had sufficient capacity
 function tableCapacity(req, res, next) { 
+    console.log("running tableCapacity")
     const { capacity } = res.locals.table;
     const { people } = res.locals.reservation;
     if (capacity >= people) {
@@ -103,6 +105,7 @@ function tableStatusFree(req, res, next) {
 
 // validation middlware: checks if table status is free
 function tableStatusOccupied(req, res, next) {
+    console.log("running tableStatus")
     const { status } = res.locals.table;
     if (status === "Occupied") {
         return next();
@@ -148,6 +151,7 @@ async function seat(req, res) {
 
 // finish an occupied table
 async function finish(req, res) {
+    console.log("running tableFinish")
     const { table_id } = req.params;
     const { table } = res.locals;
     const updatedTableData = {
@@ -187,3 +191,4 @@ module.exports = {
         asyncErrorBoundary(finish),
     ]
   };
+
