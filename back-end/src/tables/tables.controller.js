@@ -121,7 +121,7 @@ function tableStatusOccupied(req, res, next) {
 // list all tables - sorted by table_name
 async function list(req, res) {
     res.json({ data: await service.list() });
-  }
+}
 
 // create a new table
 async function create(req, res) {
