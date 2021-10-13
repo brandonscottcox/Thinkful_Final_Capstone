@@ -1,4 +1,10 @@
 const knex = require("../db/connection");
+async function list(reservation_date) {
+  return await knex("reservations")
+    .where({ reservation_date })
+    .whereNot({ status: "finished" })
+    .orderBy("reservation_time", "asc");
+}
 
 function create(reservation) {
     return knex("reservations")
