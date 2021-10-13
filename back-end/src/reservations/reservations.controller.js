@@ -206,6 +206,13 @@ function list(req, res) {
   res.json({ data: data });
 }
 
+/*
+function list(req, res) {
+  const { data } = res.locals;
+  res.json({ data: data });
+}
+*/
+
 // creates a reservation
 async function create(req, res) {
   const reservation = await service.create(req.body.data);
