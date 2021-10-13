@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { deletePartyFromTable } from "../utils/api";
 import { useHistory } from "react-router-dom";
 
-export default function TableCard({ setCalledAPI, calledAPI, table }) {
+export default function TableCard({ setCalledAPI, calledAPI, table, loadTables, loadReservations }) {
   const [error, setError] = useState(null);
 
   const history = useHistory();
@@ -27,11 +27,12 @@ export default function TableCard({ setCalledAPI, calledAPI, table }) {
     );
     if (answer) {
       deletePartyFromTable(table.table_id, abortController.signal)
-        .then(history.push(`/dashboard`))
+        .then(loadTables)
+        .then(loadReservations)
         .catch(setError);
     }
   }
-
+console.log(table)
   return (
     <div className="card">
       <div className="card-body">

@@ -23,8 +23,11 @@ import ReservationCard from "../reservations/ReservationCard";
   calledAPI,
   setCalledAPI,
   listReservations,
-  listTables
+  listTables,
+  loadReservations,
+  loadTables
 }) {
+
   const history = useHistory();
 
   
@@ -77,6 +80,8 @@ import ReservationCard from "../reservations/ReservationCard";
                 setTables={setTables}
                 listReservations={listReservations}
                 listTables={listTables}
+                loadReservations={loadReservations}
+                loadTables={loadTables}
               />
             ))
           ) : (

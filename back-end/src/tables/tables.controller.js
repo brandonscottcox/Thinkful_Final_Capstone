@@ -107,8 +107,8 @@ function tableStatusFree(req, res, next) {
 // validation middlware: checks if table status is free
 function tableStatusOccupied(req, res, next) {
     console.log("running tableStatus")
-    const { status } = res.locals.table;
-    if (status === "Occupied") {
+    const { reservation_id } = res.locals.table;
+    if (reservation_id) {
         return next();
     } else {
         return next({
@@ -157,7 +157,7 @@ async function finish(req, res) {
     const { table } = res.locals;
     const updatedTableData = {
         ...table,
-        status: "Free"
+        reservation_id: null 
     }
     const updatedTable = await service.finish(updatedTableData);
     // set reservation status to "finished" using reservation id

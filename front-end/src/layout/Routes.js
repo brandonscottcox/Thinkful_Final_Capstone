@@ -97,6 +97,8 @@ export default function Routes() {
           setCalledAPI={setCalledAPI}
           listReservations={listReservations}
           listTables={listTables}
+          loadReservations={loadReservations}
+          loadTables={loadTables}
         />
       </Route>
       <Route>
