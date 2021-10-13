@@ -10,4 +10,3 @@ exports.down = function(knex) {
     });
 };
 
-//edit

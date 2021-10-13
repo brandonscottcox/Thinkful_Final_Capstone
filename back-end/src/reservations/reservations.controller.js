@@ -127,8 +127,23 @@ function statusBooked(req, res, next) {
   }
 }
 
+async function byDateOrPhone(req, res, next) {
+  const { date, mobile_number } = req.query;
 
+  if (date) {
+    const reservations = await service.list(date);
+    // if (reservations.length) {
+      res.locals.data = reservations;
+      return next();
+  } 
+  if (mobile_number) {
+    const reservation = await service.find(mobile_number);
+    res.locals.data = reservation;
+    return next();
+  }
+}
 
+/*
 // validation middleware: checks the request query 
 // if query is date, check that the selected date has reservations that aren't finished
 // if query is mobile_number, look for reservations matching that number
@@ -136,7 +151,6 @@ async function byDateOrPhone(req, res, next) {
   const { date, mobile_number } = req.query;
 
   if (date) {
-      console.log("date Exists")
     const reservations = await service.list(date);
     // if (reservations.length) {
       res.locals.data = reservations;
@@ -154,7 +168,7 @@ async function byDateOrPhone(req, res, next) {
     res.locals.data = reservation;
     return next();
   }
-}
+}*/
 
 // validation middleware: checks if a reservation_id exists
 async function reservationExists(req, res, next) {
