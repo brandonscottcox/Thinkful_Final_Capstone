@@ -11,7 +11,7 @@ export default function SeatParty({
   setTables,
 }) {
   const history = useHistory();
-  const [reservation, setReservation] = useState(null);
+  const [reservation, setReservation] = useState({});
   const [table, setTable] = useState(tables[0]);
   const [error, setError] = useState(null);
   const abortController = new AbortController();
@@ -19,12 +19,10 @@ export default function SeatParty({
     params: { reservation_id },
   } = useRouteMatch();
 
-  useEffect(loadReservation, []);
-  function loadReservation() {
-    readReservation(reservation_id, abortController.signal)
-      .then(setReservation)
-      .catch(() => setError({ message: "The reservation was not found" }));
-  }
+  useEffect(() => {
+    readReservation(reservation_id)
+    .then(setReservation);
+ }, [reservation_id]);
 
   async function handleSubmit(event) {
     event.preventDefault();
