@@ -21,7 +21,6 @@ export default function AddEditReservation({ calledAPI, setCalledAPI }) {
     people: "",
   });
 
-  const [reservation, setReservation] = useState({});
   const {
     params: { reservation_id },
   } = useRouteMatch();
@@ -39,56 +38,6 @@ export default function AddEditReservation({ calledAPI, setCalledAPI }) {
         .then(setFormData)
         .catch(setErrors);
     }
-  }
-  // function loadReservation() {
-  //   if (reservation_id) {
-  //     readReservation(reservation_id)
-  //       .then((response) => {
-  //         let {
-  //           first_name,
-  //           last_name,
-  //           mobile_number,
-  //           reservation_date,
-  //           reservation_time,
-  //           people,
-  //         } = response;
-  //         reservation_date = reservation_date.slice(0, 10);
-  //         setReservation(() => ({
-  //           ...reservation,
-  //           first_name,
-  //           last_name,
-  //           mobile_number,
-  //           reservation_date,
-  //           reservation_time,
-  //           people,
-  //         }));
-  //         setFormData(() => ({
-  //           ...formData,
-  //           first_name,
-  //           last_name,
-  //           mobile_number,
-  //           reservation_date,
-  //           reservation_time,
-  //           people,
-  //         }));
-  //       })
-  //       .then(console.log)
-  //       .catch(console.log);
-  //   } else {
-  //     setReservation({
-  //       first_name: "",
-  //       last_name: "",
-  //       mobile_number: "",
-  //       reservation_date: "",
-  //       reservation_time: "",
-  //       people: "",
-  //     });
-  //   }
-  // }
-
-  useEffect(syncFormAndReservation, [reservation]);
-  function syncFormAndReservation() {
-    setFormData(() => ({ ...formData, ...reservation }));
   }
 
   function handleChange({ target }) {
