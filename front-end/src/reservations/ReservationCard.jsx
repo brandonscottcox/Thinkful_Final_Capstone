@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { updateReservationStatus } from "../utils/api";
 
 export default function ReservationCard({
@@ -7,7 +7,52 @@ export default function ReservationCard({
   calledAPI,
   setCalledAPI,
 }) {
-  function handleCancel() {
+
+  const [cancelError, setCancelError] = useState([]);
+  const history = useHistory();
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
+        const abortController = new AbortController();
+        // PUT request
+        async function cancel() {
+            try {
+                await updateReservationStatus(reservation.reservation_id, "cancelled", abortController.signal);
+                history.go(0);
+            } catch (error) {
+                setCancelError([...cancelError, error.message]);
+            }
+        }
+        if (cancelError.length === 0) {
+            cancel();
+        }
+    }
+}
+
+  //updateReservationStatus
+  /*
+      const cancelHandler = (event) => {
+        event.preventDefault();
+        if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
+            const abortController = new AbortController();
+            // PUT request
+            async function cancel() {
+                try {
+                    await updateStatus(reservation_id, "cancelled", abortController.signal);
+                    history.go(0);
+                } catch (error) {
+                    setCancelError([...cancelError, error.message]);
+                }
+            }
+            if (cancelError.length === 0) {
+                cancel();
+            }
+        }
+    }
+    */
+   /*
+     function handleCancel() {
     const abortController = new AbortController();
     const answer = window.confirm(
       "Do you want to cancel this reservation?\n\nThis cannot be undone."
@@ -22,6 +67,7 @@ export default function ReservationCard({
         .catch(console.log);
     }
   }
+  */
 
   return (
     <div className="card mt-1">
