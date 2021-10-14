@@ -62,7 +62,7 @@ import ReservationCard from "../reservations/ReservationCard";
             Next
           </button>
           {reservations.map((reservation) => (
-            <ReservationCard key={reservations} reservation={reservation} />
+            <ReservationCard key={reservation.reservation_id} reservation={reservation} />
           ))}
         </div>
         <div className="col-md-6 col-sm-12">
