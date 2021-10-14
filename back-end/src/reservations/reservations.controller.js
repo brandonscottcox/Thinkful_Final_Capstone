@@ -143,33 +143,6 @@ async function byDateOrPhone(req, res, next) {
   }
 }
 
-/*
-// validation middleware: checks the request query 
-// if query is date, check that the selected date has reservations that aren't finished
-// if query is mobile_number, look for reservations matching that number
-async function byDateOrPhone(req, res, next) {
-  const { date, mobile_number } = req.query;
-
-  if (date) {
-    const reservations = await service.list(date);
-    // if (reservations.length) {
-      res.locals.data = reservations;
-      return next();
-    // } else {
-    //     console.log("no date return 404")
-    //   return next({
-    //     status: 404, 
-    //     message: `There are currently no pending reservations for ${date}`,
-    //   });
-    // }
-  } 
-  if (mobile_number) {
-    const reservation = await service.find(mobile_number);
-    res.locals.data = reservation;
-    return next();
-  }
-}*/
-
 // validation middleware: checks if a reservation_id exists
 async function reservationExists(req, res, next) {
   const { reservationId } = req.params;
@@ -219,13 +192,6 @@ function list(req, res) {
   const { data } = res.locals;
   res.json({ data: data });
 }
-
-/*
-function list(req, res) {
-  const { data } = res.locals;
-  res.json({ data: data });
-}
-*/
 
 // creates a reservation
 async function create(req, res) {

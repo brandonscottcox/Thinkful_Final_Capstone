@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { updateReservationStatus } from "../utils/api";
 
-export default function ReservationCard({
-  reservation,
-  calledAPI,
-  setCalledAPI,
-}) {
+export default function ReservationCard({ reservation }) {
 
   const [cancelError, setCancelError] = useState([]);
   const history = useHistory();
