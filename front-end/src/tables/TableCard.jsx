@@ -1,7 +1,7 @@
 import React from "react";
 import { deletePartyFromTable } from "../utils/api";
 
-export default function TableCard({ setCalledAPI, calledAPI, table, loadTables, loadReservations }) {
+export default function TableCard({ table, loadTables, loadReservations }) {
   let setError = null
 
   function handleFinish() {
