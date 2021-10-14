@@ -24,6 +24,15 @@ export default function SeatParty({
     .then(setReservation);
  }, [reservation_id]);
 
+/*
+  useEffect(loadReservation, []);
+  function loadReservation() {
+    readReservation(reservation_id, abortController.signal)
+      .then(setReservation)
+      .catch(() => setError({ message: "The reservation was not found" }));
+  }
+  */
+
   async function handleSubmit(event) {
     event.preventDefault();
     const dateCopy = date;
