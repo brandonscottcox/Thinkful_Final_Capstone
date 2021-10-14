@@ -30,45 +30,6 @@ export default function ReservationCard({
     }
 }
 
-  //updateReservationStatus
-  /*
-      const cancelHandler = (event) => {
-        event.preventDefault();
-        if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
-            const abortController = new AbortController();
-            // PUT request
-            async function cancel() {
-                try {
-                    await updateStatus(reservation_id, "cancelled", abortController.signal);
-                    history.go(0);
-                } catch (error) {
-                    setCancelError([...cancelError, error.message]);
-                }
-            }
-            if (cancelError.length === 0) {
-                cancel();
-            }
-        }
-    }
-    */
-   /*
-     function handleCancel() {
-    const abortController = new AbortController();
-    const answer = window.confirm(
-      "Do you want to cancel this reservation?\n\nThis cannot be undone."
-    );
-    if (answer) {
-      updateReservationStatus(
-        Number(reservation.reservation_id),
-        "cancelled",
-        abortController.signal
-      )
-        .then(() => setCalledAPI(!calledAPI))
-        .catch(console.log);
-    }
-  }
-  */
-
   return (
     <div className="card mt-1">
       <div className="card-body">
