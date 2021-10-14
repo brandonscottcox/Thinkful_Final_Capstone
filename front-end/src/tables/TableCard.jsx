@@ -1,24 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { deletePartyFromTable } from "../utils/api";
-import { useHistory } from "react-router-dom";
 
 export default function TableCard({ setCalledAPI, calledAPI, table, loadTables, loadReservations }) {
-  const [error, setError] = useState(null);
-
-  const history = useHistory();
-  /*
-  function handleFinish() {
-    const abortController = new AbortController();
-    const answer = window.confirm(
-      "Is this table ready to seat new guests? \n\nThis cannot be undone."
-    );
-    if (answer) {
-      deletePartyFromTable(table.table_id, abortController.signal)
-        .then(() => setCalledAPI(() => !calledAPI))
-        .catch(setError);
-    }
-  }
-  */
+  // const [error, setError] = useState(null);
+  let setError = null
 
   function handleFinish() {
     const abortController = new AbortController();
