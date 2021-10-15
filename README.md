@@ -1,5 +1,7 @@
 # Capstone: Restaurant Reservation System
 
+This is a fully functioning reservation application that was created for Thinkful's final capstone project for their Engineering Immersion program. It uses the following technologies: React.js, Node.js, PostgreSQL, Express.js, & Knex.js
+
 > You have been hired as a full stack developer at _Periodic Tables_, a startup that is creating a reservation system for fine dining restaurants.
 > The software is used only by restaurant personnel when a customer calls to request a reservation.
 > At this point, the customers will not access the system online.
