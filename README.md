@@ -27,13 +27,92 @@ https://bcox-front-reservation.herokuapp.com/dashboard
 
 <hr>
 
-### GET: `?date=YYYY-MM-DD`
-
-Returns a list of reservations made for that date.
-
 ### GET: `?mobile_number={some-number}`
 
-Returns a list of reservations that at least partially match the number query.
+Returns reservations that match the number query.
+
+### GET: `?date=YYYY-MM-DD`
+
+Returns reservations made for that date.
+
+<i>Shape of response.data from both requests above:</i>
+
+```
+[
+    {
+        reservation_id: 1,
+        first_name: "Brandon",
+        last_name: "Cox",
+        mobile_number: "111-222-3333",
+        reservation_date: "2021-08-31",
+        reservation_time: "3:33",
+        people: 2,
+        status: "booked"
+    }
+```
+
+### POST
+
+A request body is needed for this route. The body of your request should look like this:
+
+```
+request: {
+    body: {
+        data: {
+            first_name: "Brandon",
+            last_name: "Cox",
+            mobile_number: "123-456-7890",
+            reservation_date: "2021-08-31",
+            reservation_time: "13:30",
+            people: 6,
+            status: "booked"
+        }
+    }
+}
+```
+
+- The mobile number must be in hyphenated format. xxx-xxxx or xxx-xxx-xxxx will suffice.
+- Date must be in the format YYYY-MM-DD. Also, the date must occur either on the current day or in the future.
+- The time must be in 24H (HH:MM) format. Also, if the date property is on today's date, the time must not have passed on that day when the request is made.
+- People must be an integer greater than 0.
+
+Returns status 201 and the created reservation object.<br><br>
+
+## `/tables`
+
+<hr>
+
+### GET
+
+Returns all tables in the database.
+
+```
+[
+  {
+    table_id: 7,
+    table_name: "Bar #1",
+    capacity: 2,
+    reservation_id: null
+  }
+  ...
+]
+```
+
+### POST
+
+Body of the post:
+
+```
+data : {
+    table_name: "#1",
+    capacity: 6,
+    reservation_id: 4
+}
+```
+
+Returns 201 and the created table.
+<br><br>
+
 
 
 > You have been hired as a full stack developer at _Periodic Tables_, a startup that is creating a reservation system for fine dining restaurants.
