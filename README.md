@@ -1,6 +1,6 @@
 # Capstone: Restaurant Reservation System
 
-This is a fully functioning reservation application that was created for Thinkful's final capstone project for their Engineering Immersion program. It uses the following technologies: React.js, Node.js, PostgreSQL, Express.js, & Knex.js
+This is a fully functioning reservation application that was created for Thinkful's Engineering Immersion program's final capstone project. It uses the following technologies: React.js, Node.js, PostgreSQL, Express.js, & Knex.js
 
 You can view the full deployment of this application here:
 https://bcox-front-reservation.herokuapp.com/dashboard
