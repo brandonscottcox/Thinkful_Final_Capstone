@@ -21,6 +21,21 @@ https://bcox-front-reservation.herokuapp.com/dashboard
 
 ![](Pictures/Table.PNG)
 
+# API Documention
+
+## `/reservations`
+
+<hr>
+
+### GET: `?date=YYYY-MM-DD`
+
+Returns a list of reservations made for that date.
+
+### GET: `?mobile_number={some-number}`
+
+Returns a list of reservations that at least partially match the number query.
+
+
 > You have been hired as a full stack developer at _Periodic Tables_, a startup that is creating a reservation system for fine dining restaurants.
 > The software is used only by restaurant personnel when a customer calls to request a reservation.
 > At this point, the customers will not access the system online.
