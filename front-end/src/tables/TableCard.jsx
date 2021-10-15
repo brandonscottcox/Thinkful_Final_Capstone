@@ -18,9 +18,9 @@ export default function TableCard({ table, loadTables, loadReservations }) {
   }
 
   return (
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">Table: {table.table_name}</h5>
+    <div className="card mt-1 border-secondary">
+        <h5 className="card-title card-header">Table: {table.table_name}</h5>
+        <div className="card-body">
         <p className="card-text">Capacity: {table.capacity}</p>
         <p data-table-id-status={table.table_id}>
           Status: {table.reservation_id ? "Occupied" : "Free"}

@@ -27,12 +27,12 @@ export default function ReservationCard({ reservation }) {
 }
 
   return (
-    <div className="card mt-1">
-      <div className="card-body">
-        <h5 className="card-title">
+    <div className="card mt-1 border-secondary">
+        <h5 className="card-title card-header">
           Reservation for:{" "}
           {`${reservation.first_name} ${reservation.last_name}`}
         </h5>
+        <div className="card-body">
         <p className="card-text">Number: {reservation.mobile_number}</p>
         <p className="card-text">Date: {reservation.reservation_date}</p>
         <p className="card-text">Time: {reservation.reservation_time}</p>

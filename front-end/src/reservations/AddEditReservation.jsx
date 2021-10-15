@@ -109,7 +109,7 @@ export default function AddEditReservation({ calledAPI, setCalledAPI }) {
             name="first_name"
             value={formData.first_name}
             className="form-control"
-            placeholder="Jane"
+            placeholder="Enter First Name"
             onChange={handleChange}
           />
         </div>
@@ -121,7 +121,7 @@ export default function AddEditReservation({ calledAPI, setCalledAPI }) {
             name="last_name"
             value={formData.last_name}
             className="form-control"
-            placeholder="Appleseed"
+            placeholder="Enter Last Name"
             onChange={handleChange}
           />
         </div>
