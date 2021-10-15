@@ -16,7 +16,7 @@ export default function TableCard({ table, loadTables, loadReservations }) {
         .catch(setError);
     }
   }
-console.log(table)
+
   return (
     <div className="card">
       <div className="card-body">
