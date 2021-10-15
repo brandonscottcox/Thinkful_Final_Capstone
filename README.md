@@ -21,7 +21,7 @@ https://bcox-front-reservation.herokuapp.com/dashboard
 
 ![](Pictures/Table.PNG)
 
-# API Documention
+# API
 
 ## `/reservations`
 
