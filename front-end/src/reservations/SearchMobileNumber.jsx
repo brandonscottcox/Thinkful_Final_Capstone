@@ -26,7 +26,7 @@ export default function SearchMobileNumber() {
     <div>
       {error && <ErrorAlert error={error} />}
       <form className="mt-2" name="search_for_number" onSubmit={handleSubmit}>
-        <label html>
+        <label>
           <h2>Search by Mobile Number</h2>
         </label>
         <div className="row">
@@ -58,7 +58,7 @@ export default function SearchMobileNumber() {
       <div className="mt-4">
         {searchResults.length ? (
           searchResults.map((reservation) => (
-            <ReservationCard reservation={reservation} />
+            <ReservationCard key={reservation.reservation_id} reservation={reservation} />
           ))
         ) : (
           <h1>No reservations found</h1>
