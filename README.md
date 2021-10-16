@@ -7,9 +7,11 @@ https://bcox-front-reservation.herokuapp.com/dashboard
 
 ## Dashboard
 
+```
 - Shows a list of reservations.
 - Shows a list of tables within the restaurant and whether or not they are available.
 - Has a series of navigation buttons that take you through the availble dates.
+```
 
 ![](Pictures/Dashboard.PNG)
 
