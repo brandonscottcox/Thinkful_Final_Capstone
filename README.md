@@ -7,19 +7,47 @@ https://bcox-front-reservation.herokuapp.com/dashboard
 
 ## Dashboard
 
+- Shows a list of reservations.
+- Shows a list of tables within the restaurant and whether or not they are available.
+- Has a series of navigation buttons that take you through the availble dates.
+
 ![](Pictures/Dashboard.PNG)
 
 ## Search
+
+- You can search for reservations based on costumers phone numbers.
+- Using the "Find" button will present you with a list of the numbers.
 
 ![](Pictures/Search.PNG)
 
 ## Create Reservation Form
 
+- This page will present you with a form to fill out the reservation information.
+- Clicking "Submit" will send the information into the databse and return the reservation on the dashboard.
+
 ![](Pictures/Reservation.PNG)
 
 ## Create Table Form
 
+- This page will present you with a form to create a new table within the restaurant for customers to sit at.
+- Clicking "Submit" will send the information into the databse and return the table on the dashboard.
+
 ![](Pictures/Table.PNG)
+
+## Seating a Reservation
+
+- Clicking the "Seat" bitton will open a page where you can choose any available tables from a drop down menu for reservations.
+- Clicking the "Submit" button will send the information into the database and seat the reservation at the slected table.
+
+## Editing a Reservation
+
+- Clicking "Edit" will allow you to edit any information on a reservation.
+- Clicking "Submit" will save the updated reservation into the database and dashboard.
+
+## Cancelling a Reservation
+
+- Clicking "Cancel" will provide a window that will ask if you would like to cancel the resevation.
+- Clicking "OK" on the window will cancel the reservation status.
 
 # API Documention
 
