@@ -46,7 +46,7 @@ https://bcox-front-reservation.herokuapp.com/dashboard
 - Clicking "Edit" will allow you to edit any information on a reservation.
 - Clicking "Submit" will save the updated reservation into the database and dashboard.
 
-![](Pictures/Edit.PNG)
+![](Pictures/Edit.png)
 
 ## Cancelling a Reservation
 
