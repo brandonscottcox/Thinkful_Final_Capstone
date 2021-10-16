@@ -39,15 +39,21 @@ https://bcox-front-reservation.herokuapp.com/dashboard
 - Clicking the "Seat" bitton will open a page where you can choose any available tables from a drop down menu for reservations.
 - Clicking the "Submit" button will send the information into the database and seat the reservation at the slected table.
 
+![](Pictures/Seat.PNG)
+
 ## Editing a Reservation
 
 - Clicking "Edit" will allow you to edit any information on a reservation.
 - Clicking "Submit" will save the updated reservation into the database and dashboard.
 
+![](Pictures/Edit.PNG)
+
 ## Cancelling a Reservation
 
 - Clicking "Cancel" will provide a window that will ask if you would like to cancel the resevation.
 - Clicking "OK" on the window will cancel the reservation status.
+
+![](Pictures/Cancel.PNG)
 
 # API Documention
 
